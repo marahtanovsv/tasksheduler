@@ -8,14 +8,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
 
 public class TaskDate {
 
-    private ArrayList<Task> tasks = new ArrayList<Task>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     public void doTask(String message) {
         if (message.equals("message")) {
@@ -42,13 +41,23 @@ public class TaskDate {
     }
 
     public void ViewTask() {
-        int i = 0;
+        int i = 1;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMM.yyyy  HH:mm:ss ");
         for (Task task : tasks) {
-            if (task.getDoing().equals("message"))
-                System.out.println("Номер задачи " + i + "время запуска задачи: " + task.getData() + "Действие" + task.getDoing() + "Выводимое сообщение");
-            else if (task.getDoing().equals("bip"))
-                System.out.println("время запуска задачи: " + task.getData() + "Действие воспроизвести аудио файл");
+            try {
+                if (task.getDoing().equals("Message"))
+                    System.out.println(i+") Имя задачи " + task.getDescription() + " время запуска задачи: " + dateFormat.format(task.getData().getTime()) + " Действие " + task.getDoing() + " Выводимое сообщение " + task.getMessage());
+                else if (task.getDoing().equals("bip"))
+                    System.out.println(i+") Имя задачи " + task.getDescription() + " время запуска задачи: " + dateFormat.format(task.getData().getTime()) + "Действие воспроизвести аудио файл");
+            } catch (NullPointerException e) {
+                System.out.println(i+") Имя задачи " + task.getDescription() + " время запуска задачи: " + dateFormat.format(task.getData().getTime()) + " Действие не задано");
+            }
+            i++;
         }
+    }
+
+    public void addTaskToTasks(Task task) {
+        tasks.add(task);
     }
 
     public void editTask(int numberTask) {
@@ -58,13 +67,14 @@ public class TaskDate {
         System.out.println("1. Задать время.");
         System.out.println("2. Задать действие");
         System.out.println("3. Выход");
-        String editTaskCommand = null;
+        String editTaskCommand = "";
         try {
-            while (true) {
+            while (!editTaskCommand.equals("3")) {
                 editTaskCommand = bf.readLine();
+                String editDateString = "";
                 switch (editTaskCommand) {
                     case ("1"):
-                        while (true) {
+                        while (!editDateString.equals("7")) {
                             System.out.println("что необходимо изменить.");
                             System.out.println("1.день");
                             System.out.println("2.месяц");
@@ -73,7 +83,7 @@ public class TaskDate {
                             System.out.println("5.минуту");
                             System.out.println("6.секунду");
                             System.out.println("7.Отмена");
-                            String editDateString = null;
+
                             try {
                                 editDateString = bf.readLine();
                             } catch (IOException e1) {
@@ -84,57 +94,62 @@ public class TaskDate {
                                 case ("1"):
                                     System.out.println("Введите день");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("2"):
                                     System.out.println("Введите месяц");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("3"):
                                     System.out.println("Введите год");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("4"):
                                     System.out.println("Введите час");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("5"):
                                     System.out.println("Введите минуту");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("6"):
                                     System.out.println("Введите секунду");
                                     calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                    break;
                                 case ("7"):
                                     break;
                             }
-
                         }
 
                     case ("2"):
-                        while (true) {
+                        String doString = "";
+                        while (!doString.equals("3")) {
                             System.out.println("выберите действие");
                             System.out.println("1. Вывести сообщение.");
                             System.out.println("2. Воспроизвести аудио файл");
                             System.out.println("3. Выход");
                             try {
-                                String doString = bf.readLine();
+                                doString = bf.readLine();
                                 switch (doString) {
                                     case ("1"):
                                         task.setDoing("Message");
                                         System.out.print("Введите сообщение: ");
                                         task.setMessage(bf.readLine());
+                                        break;
                                     case ("2"):
                                         task.setDoing("bip");
+                                        break;
                                     case ("3"):
                                         break;
                                 }
+                                break;
                             } catch (IOException e) {
                                 System.out.println("Введены некоректные данные, необходимо ввести номер меню");
                             }
 
                         }
-                    case ("3"):
-                        break;
                 }
             }
-        } catch (IOException e)
-
-        {
+        } catch (IOException e) {
             System.out.println("Введены некоректные данные, необходимо ввести номер меню");
         }
 

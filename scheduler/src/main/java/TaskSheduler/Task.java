@@ -6,18 +6,29 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Task {
+    private String doing ;
+    private Calendar data;
+    private String message;
+    private String Description;
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+
     public String getDoing() {
         return doing;
     }
-
-    private String doing ;
 
     public void setDoing(String doing) {
         this.doing = doing;
     }
 
-    private Calendar data;
-    private String message;
+
 
     public String getMessage() {
         return message;
