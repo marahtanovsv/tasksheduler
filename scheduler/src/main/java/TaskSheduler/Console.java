@@ -89,7 +89,9 @@ public class Console {
                                     }
                             }
                         }
-                        if (model.addTaskToTasks(task)) System.out.println("Задача успешно создана");
+                        if (model.addTaskToTasks(task)) {
+                            System.out.println("Задача успешно создана");
+                        }
                         break;
                     case ("2"):
                         printTaskList(model);
@@ -209,18 +211,9 @@ public class Console {
         }
     }
     public static void printTaskList(TaskDate model){
-        int i = 1;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMM.yyyy  HH:mm:ss ");
+
         for (Task taskList : model.viewTask()) {
-            try {
-                if (taskList.getDoing().equals("Message"))
-                    System.out.println(i+") Имя задачи " + taskList.getDescription() + " время запуска задачи: " + dateFormat.format(taskList.getData().getTime()) + " Действие " + taskList.getDoing() + " Выводимое сообщение " + taskList.getMessage());
-                else if (taskList.getDoing().equals("bip"))
-                    System.out.println(i+") Имя задачи " + taskList.getDescription() + " время запуска задачи: " + dateFormat.format(taskList.getData().getTime()) + "Действие воспроизвести аудио файл");
-            } catch (NullPointerException e) {
-                System.out.println(i+") Имя задачи " + taskList.getDescription() + " время запуска задачи: " + dateFormat.format(taskList.getData().getTime()) + " Действие не задано");
-            }
-            i++;
+            System.out.println(taskList.toString());
         }
     }
 

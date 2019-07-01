@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskDate {
-
+    private Parser parser = new Parser();
     private ArrayList<Task> tasks = new ArrayList<>();
 
     public void doTask(String message) {
@@ -41,14 +41,12 @@ public class TaskDate {
     }
 
     public boolean addTaskToTasks(Task task) {
+        parser.writeObjectToXML(task);
         return tasks.add(task);
     }
 
     public Task editTask(int numberTask) {
         return tasks.get(numberTask);
-
-
-
     }
 }
 
