@@ -1,14 +1,15 @@
 package TaskSheduler;
 
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import javax.xml.bind.annotation.*;
 import java.util.GregorianCalendar;
-@XmlRootElement(name = "Task")
-@XmlType(propOrder = {"description", "data", "doing","message"})
+@XmlRootElement
 public class Task {
-    private long id=-1;
+    private long id;
     private String doing ;
     private Calendar data;
     private String message;
@@ -32,7 +33,7 @@ public class Task {
     public String getDescription() {
         return description;
     }
-    @XmlAttribute
+
     public long getId() {
         return id;
     }
@@ -45,16 +46,23 @@ public class Task {
     public Calendar getData() {
         return data;
     }
-
+    @XmlAttribute
+    public void setId(long id) {
+        this.id = id;
+    }
+    @XmlElement
     public void setDescription(String description) {
         this.description = description;
     }
+    @XmlElement
     public void setDoing(String doing) {
         this.doing = doing;
     }
+    @XmlElement
     public void setMessage(String message) {
         this.message = message;
     }
+    @XmlElement
     public void setData(Calendar data) {
         this.data = data;
     }

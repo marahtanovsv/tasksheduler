@@ -3,8 +3,6 @@ package TaskSheduler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -102,13 +100,14 @@ public class Console {
                             try {
                                 printTaskList(model);
                                 boolean startTaskDoEdit=true;
-                                String editTaskCommand = "";
+                                String editTaskCommand="";
+                                if(startTaskDoEdit) {
+                                    System.out.println("Введите номер задачи для редактирования");
+                                    task = model.editTask(Integer.parseInt(bf.readLine()));
+                                }else {
+                                    task=null;
+                                }
                                 while (!editTaskCommand.equals("3")) {
-                                    if(startTaskDoEdit) {
-                                        System.out.println("Введите номер задачи для редактирования");
-                                        task = model.editTask(Integer.parseInt(bf.readLine()) - 1);
-                                    }
-                                    else task=null;
                                     System.out.println("1. Задать время.");
                                     System.out.println("2. Задать действие");
                                     System.out.println("3. Выход");
@@ -209,7 +208,7 @@ public class Console {
                 System.out.println("Введен недопустимый параметр.");
             }
         }
-        parser.writeObjectToXML(model.viewTask());
+        parser.writeObjectToXML(model);
     }
     public static void printTaskList(TaskDate model){
 

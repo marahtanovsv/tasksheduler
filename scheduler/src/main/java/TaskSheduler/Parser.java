@@ -5,18 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 public class Parser {
     File file = new File("c:/tasks.xml");
 
-    public void writeObjectToXML(ArrayList<Task> tasks) {
+    public void writeObjectToXML(TaskDate tasks) {
         try {
             JAXBContext context = JAXBContext.newInstance(TaskDate.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             OutputStream os = new FileOutputStream("c:/tasks.xml");
             marshaller.marshal(tasks, os);
+            marshaller.marshal(tasks, System.out);
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -24,18 +24,18 @@ public class Parser {
         }
     }
 
-    public ArrayList<Task> readXMLToObject() {
+    public TaskDate readXMLToObject() {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Task.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(TaskDate.class);
             Unmarshaller un = jaxbContext.createUnmarshaller();
 
-            return (ArrayList<Task>) un.unmarshal(file);
+            return (TaskDate) un.unmarshal(file);
 
 
+        } catch (UnmarshalException e) {
+            return new TaskDate();
         } catch (JAXBException e) {
             e.printStackTrace();
-        } catch (ClassCastException e) {
-            return new ArrayList<Task>();
         }
         return null;
     }

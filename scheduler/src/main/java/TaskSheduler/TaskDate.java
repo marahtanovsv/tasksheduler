@@ -4,16 +4,32 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-@XmlRootElement(name = "TaskDate")
-@XmlType(propOrder = {"tasks"})
+@XmlRootElement
 public class TaskDate {
+    @XmlElement
+    public void setParser(Parser parser) {
+        this.parser = parser;
+    }
+    @XmlElement
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     private Parser parser = new Parser();
+
+    public Parser getParser() {
+        return parser;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
     private ArrayList<Task> tasks = new ArrayList<>();
 
     public void doTask(String message) {
@@ -42,8 +58,8 @@ public class TaskDate {
     public ArrayList<Task> viewTask() {
         return tasks;
     }
-    public ArrayList<Task> loadData(){
-        return parser.readXMLToObject();
+    public void loadData(){
+        this.tasks=parser.readXMLToObject().getTasks();
     }
     public boolean addTaskToTasks(Task task) {
         return tasks.add(task);
