@@ -158,12 +158,11 @@ public class Console {
                                                         System.out.println("Введите секунду");
                                                         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
                                                         break;
-                                                    case ("7"):
-                                                        break;
                                                 }
-                                            }
 
-                                        case ("2"):
+                                            }
+                                            break;
+                                            case ("2"):
                                             String doString = "";
                                             while (!doString.equals("3")) {
                                                 System.out.println("выберите действие");
