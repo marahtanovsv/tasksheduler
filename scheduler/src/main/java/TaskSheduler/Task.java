@@ -8,9 +8,6 @@ import java.util.GregorianCalendar;
 @XmlRootElement(name = "Task")
 @XmlType(propOrder = {"description", "data", "doing","message"})
 public class Task {
-
-
-
     private long id=-1;
     private String doing ;
     private Calendar data;

@@ -11,12 +11,13 @@ import java.util.GregorianCalendar;
 public class Console {
     public static void main(String[] args) {
         TaskDate model = new TaskDate();
-
+        Parser parser = new Parser();
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         String command = "";
         boolean createTaskDataFlag = false;
         boolean createTaskDoFlag = false;
         boolean editTaskFlag = false;
+        model.loadData();
         while (!command.equals("4")) {
             System.out.println("Добро пожаловать в планировшик задач");
             System.out.println("1. Создать задачу.");
@@ -207,8 +208,8 @@ public class Console {
             } catch (IOException e) {
                 System.out.println("Введен недопустимый параметр.");
             }
-
         }
+        parser.writeObjectToXML(model.viewTask());
     }
     public static void printTaskList(TaskDate model){
 
