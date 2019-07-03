@@ -29,11 +29,13 @@ public class Console {
                         String createTaskCommand = "";
                         Task task = new Task();
                         String nameTask = "";
-                        while (nameTask.isEmpty()) {
-                            System.out.println("Введите имя задачи");
+                        System.out.println("Введите имя задачи");
+                        nameTask = bf.readLine();
+                        task.setDescription(nameTask);
+                        while (!model.addTaskToTasks(task)) {
+                            System.out.println("Вы ошиблись вводе или такое имя уже используется. Повторите ввод.");
                             nameTask = bf.readLine();
                             task.setDescription(nameTask);
-
                         }
                         while (!createTaskCommand.equals("3")) {
                             System.out.println("выберите действие");
@@ -88,9 +90,6 @@ public class Console {
                                     }
                             }
                         }
-                        if (model.addTaskToTasks(task)) {
-                            System.out.println("Задача успешно создана");
-                        }
                         break;
                     case ("2"):
                         printTaskList(model);
@@ -135,7 +134,9 @@ public class Console {
                                                 switch (editDateString) {
                                                     case ("1"):
                                                         System.out.println("Введите день");
-                                                        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+                                                        int day =Integer.parseInt(bf.readLine());
+
+                                                        calendar.set(Calendar.DAY_OF_MONTH, day);
                                                         startTaskDoEdit=false;
                                                         break;
                                                     case ("2"):

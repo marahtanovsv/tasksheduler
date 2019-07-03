@@ -9,12 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 @XmlRootElement
 public class TaskDate {
     @XmlElement
     public void setParser(Parser parser) {
         this.parser = parser;
     }
+
     @XmlElement
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
@@ -55,14 +57,25 @@ public class TaskDate {
             }
         }
     }
+
     public ArrayList<Task> viewTask() {
         return tasks;
     }
-    public void loadData(){
-        this.tasks=parser.readXMLToObject().getTasks();
+
+    public void loadData() {
+        this.tasks = parser.readXMLToObject().getTasks();
     }
+
     public boolean addTaskToTasks(Task task) {
-        return tasks.add(task);
+        boolean exist = false;
+        for (Task taskList : tasks) {
+            if (task.getDescription().equals(taskList.getDescription())) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) return false;
+        else return tasks.add(task);
     }
 
     public Task editTask(int numberTask) {
