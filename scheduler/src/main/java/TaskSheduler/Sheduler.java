@@ -2,9 +2,7 @@ package TaskSheduler;
 
 import java.util.GregorianCalendar;
 
-import static java.lang.Thread.sleep;
-
-public class Sheduler implements Runnable {
+public class Sheduler extends Thread  {
 
     private Task task;
 

@@ -75,7 +75,7 @@ public class Task {
     }
     @Override
     public String toString(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMM.yyyy  HH:mm:ss ");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm:ss ");
         String result="";
         try {
             if (doing.equals("Message"))
@@ -114,6 +114,7 @@ public class Task {
     }
     public void startSheduler(){
         sheduler.setTask(this);
+        sheduler.setDaemon(true);
         sheduler.run();
     }
 }
