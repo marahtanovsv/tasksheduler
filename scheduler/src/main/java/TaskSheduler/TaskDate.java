@@ -75,7 +75,10 @@ public class TaskDate {
             }
         }
         if (exist) return false;
-        else return tasks.add(task);
+        else {
+            task.startSheduler();
+            return tasks.add(task);
+        }
     }
 
     public Task editTask(int numberTask) {
