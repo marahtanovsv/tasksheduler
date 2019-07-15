@@ -9,9 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 @XmlRootElement
 public class TaskDate {
+    private long idTask;
+
     @XmlElement
     public void setParser(Parser parser) {
         this.parser = parser;
@@ -58,31 +62,54 @@ public class TaskDate {
         }
     }
 
-    public ArrayList<Task> viewTask() {
-        return tasks;
+    public void viewTask() {
+        if (tasks.isEmpty()) System.out.println("Нет задач");
+        else {
+            for (Task taskList : tasks) {
+                System.out.println(taskList.toString());
+            }
+        }
     }
 
     public void loadData() {
         this.tasks = parser.readXMLToObject().getTasks();
+        Comparator<Task> comparator = Comparator.comparing(obj -> obj.getId());
+        Collections.sort(tasks, comparator);
+        if (tasks.isEmpty()) idTask = 0;
+        else {
+            idTask = tasks.get(tasks.size()).getId();
+        }
+
     }
 
     public boolean addTaskToTasks(Task task) {
-        boolean exist = false;
-        for (Task taskList : tasks) {
-            if (task.getDescription().equals(taskList.getDescription())) {
-                exist = true;
-                break;
-            }
-        }
-        if (exist) return false;
+        if (existTask(task)) return false;
         else {
-            task.startSheduler();
+
             return tasks.add(task);
         }
     }
 
     public Task editTask(int numberTask) {
         return tasks.get(numberTask);
+    }
+
+    public boolean existTask(Task task) {
+        boolean exist = false;
+        for (Task tasklist : tasks) {
+            if (task.getId() == tasklist.getId()) exist = true;
+        }
+        return exist;
+    }
+
+    public Task createTask() {
+        Task task = new Task(idTask);
+        boolean areAddedTasks = addTaskToTasks(task);
+        if (areAddedTasks) {
+            System.out.println("Залача создана!");
+            task.startSheduler();
+            return task;
+        } else return null;
     }
 }
 

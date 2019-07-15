@@ -12,12 +12,10 @@ public class Console {
         Parser parser = new Parser();
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         String command = "";
-        boolean createTaskDataFlag = false;
-        boolean createTaskDoFlag = false;
-        boolean editTaskFlag = false;
         model.loadData();
+        System.out.println("Добро пожаловать в планировшик задач");
         while (!command.equals("4")) {
-            System.out.println("Добро пожаловать в планировшик задач");
+
             System.out.println("1. Создать задачу.");
             System.out.println("2. Вывести список задач.");
             System.out.println("3. Изменить задачу.");
@@ -27,16 +25,15 @@ public class Console {
                 switch (command) {
                     case ("1"):
                         String createTaskCommand = "";
-                        Task task = new Task();
-                        String nameTask = "";
-                        System.out.println("Введите имя задачи");
-                        nameTask = bf.readLine();
-                        task.setDescription(nameTask);
-                        while (!model.addTaskToTasks(task)) {
-                            System.out.println("Вы ошиблись вводе или такое имя уже используется. Повторите ввод.");
-                            nameTask = bf.readLine();
-                            task.setDescription(nameTask);
-                        }
+                        Task task = model.createTask();
+                        if (task != null) {
+                            System.out.println("Введите имя задачи");
+                            task.setDescription(bf.readLine());
+                        } else
+                            while (model.existTask(task)) {
+                                System.out.println("Вы ошиблись вводе или такое имя уже используется. Повторите ввод.");
+                                task.setDescription(bf.readLine());
+                            }
                         while (!createTaskCommand.equals("3")) {
                             System.out.println("выберите действие");
                             System.out.println("1. Задать время.");
@@ -64,7 +61,6 @@ public class Console {
                                     System.out.println("введите секунду(число)");
                                     second = Integer.parseInt(bf.readLine());
                                     task.setData(new GregorianCalendar(year, month, day, hour, minute, second));
-                                    createTaskDataFlag = true;
                                     break;
                                 case ("2"):
                                     String doString = "";
@@ -79,32 +75,33 @@ public class Console {
                                                 task.setDoing("Message");
                                                 System.out.print("Введите сообщение: ");
                                                 task.setMessage(bf.readLine());
-                                                editTaskFlag = true;
+                                                //editTaskFlag = true;
                                                 break;
                                             case ("2"):
                                                 task.setDoing("bip");
-                                                editTaskFlag = true;
+                                                //editTaskFlag = true;
                                                 break;
                                         }
-
                                     }
+                                    break;
                             }
                         }
                         break;
                     case ("2"):
-                        printTaskList(model);
+                        model.viewTask();
                         break;
                     case ("3"):
                         while (true) {
                             try {
-                                printTaskList(model);
-                                boolean startTaskDoEdit=true;
-                                String editTaskCommand="";
-                                if(startTaskDoEdit) {
+                                model.viewTask();
+                                //boolean startTaskDoEdit = true;
+                                String editTaskCommand = "";
+                                if (model.getTasks().isEmpty()) {
+                                    System.out.println("Нет задач для изменения.");
+                                    break;
+                                } else {
                                     System.out.println("Введите номер задачи для редактирования");
                                     task = model.editTask(Integer.parseInt(bf.readLine()));
-                                }else {
-                                    task=null;
                                 }
                                 while (!editTaskCommand.equals("3")) {
                                     System.out.println("1. Задать время.");
@@ -117,13 +114,13 @@ public class Console {
                                         case ("1"):
                                             while (!editDateString.equals("7")) {
                                                 System.out.println("что необходимо изменить.");
-                                                System.out.println("1.день");
-                                                System.out.println("2.месяц");
-                                                System.out.println("3.год");
-                                                System.out.println("4.час");
-                                                System.out.println("5.минуту");
-                                                System.out.println("6.секунду");
-                                                System.out.println("7.Отмена");
+                                                System.out.println("1. День");
+                                                System.out.println("2. Месяц");
+                                                System.out.println("3. Год");
+                                                System.out.println("4. Час");
+                                                System.out.println("5. Минуту");
+                                                System.out.println("6. Секунду");
+                                                System.out.println("7. Отмена");
 
                                                 try {
                                                     editDateString = bf.readLine();
@@ -134,10 +131,8 @@ public class Console {
                                                 switch (editDateString) {
                                                     case ("1"):
                                                         System.out.println("Введите день");
-                                                        int day =Integer.parseInt(bf.readLine());
-
+                                                        int day = Integer.parseInt(bf.readLine());
                                                         calendar.set(Calendar.DAY_OF_MONTH, day);
-                                                        startTaskDoEdit=false;
                                                         break;
                                                     case ("2"):
                                                         System.out.println("Введите месяц");
@@ -163,7 +158,7 @@ public class Console {
 
                                             }
                                             break;
-                                            case ("2"):
+                                        case ("2"):
                                             String doString = "";
                                             while (!doString.equals("3")) {
                                                 System.out.println("выберите действие");
@@ -187,11 +182,10 @@ public class Console {
                                                 }
 
                                             }
+                                            break;
                                     }
                                 }
 
-
-                                break;
                             } catch (ArrayIndexOutOfBoundsException e) {
                                 System.out.println("Введены не коректные данные");
                             } catch (IndexOutOfBoundsException e) {
@@ -199,7 +193,7 @@ public class Console {
                             } catch (NumberFormatException e) {
                                 System.out.println("Номер задачи должен быть числом");
                             }
-
+                            break;
                         }
 
                 }
@@ -209,12 +203,6 @@ public class Console {
             }
         }
         parser.writeObjectToXML(model);
-    }
-    public static void printTaskList(TaskDate model){
-
-        for (Task taskList : model.viewTask()) {
-            System.out.println(taskList.toString());
-        }
     }
 
 }

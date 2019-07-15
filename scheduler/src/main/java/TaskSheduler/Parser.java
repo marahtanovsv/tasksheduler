@@ -28,15 +28,9 @@ public class Parser {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TaskDate.class);
             Unmarshaller un = jaxbContext.createUnmarshaller();
-
             return (TaskDate) un.unmarshal(file);
-
-
-        } catch (UnmarshalException e) {
-            return new TaskDate();
         } catch (JAXBException e) {
-            e.printStackTrace();
+            return new TaskDate();
         }
-        return null;
     }
 }
