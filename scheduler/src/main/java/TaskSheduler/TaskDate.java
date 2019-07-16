@@ -15,6 +15,8 @@ import java.util.Comparator;
 @XmlRootElement
 public class TaskDate {
     private long idTask;
+    private Parser parser = new Parser();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     @XmlElement
     public void setParser(Parser parser) {
@@ -26,7 +28,7 @@ public class TaskDate {
         this.tasks = tasks;
     }
 
-    private Parser parser = new Parser();
+
 
     public Parser getParser() {
         return parser;
@@ -36,29 +38,19 @@ public class TaskDate {
         return tasks;
     }
 
-    private ArrayList<Task> tasks = new ArrayList<>();
-
-    public void doTask(String message) {
+    public void doTask(String message) throws IOException, UnsupportedAudioFileException, InterruptedException, LineUnavailableException {
         if (message.equals("message")) {
             System.out.println(message);
         }
         if (message.equals("bip")) {
             File clap = new File("beep.wav");
             Clip clip = null;
-            try {
+
                 clip = AudioSystem.getClip();
                 clip.open(AudioSystem.getAudioInputStream(clap));
                 clip.start();
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
     }
 

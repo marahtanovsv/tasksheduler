@@ -18,12 +18,12 @@ public class Sheduler extends Thread {
             if (currentDate.equals(task.getData())) {
                 String doing = task.getDoing();
                 if (!doing.isEmpty()) {
-                    task.doTask(doing);
-                    task.setStatus(false);
                     try {
                         sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        task.doTask(doing);
+                        task.setStatus(false);
+                    } catch (Exception e) {
+                        System.out.println("Упс... Чтото пошло не так");
                     }
                 }
             }

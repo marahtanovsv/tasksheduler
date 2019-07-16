@@ -120,15 +120,6 @@ public class Task{
                 clip.open(AudioSystem.getAudioInputStream(clap));
                 clip.start();
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
-            /*} catch (LineUnavailableException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
         }
     }
     public void startSheduler(){
