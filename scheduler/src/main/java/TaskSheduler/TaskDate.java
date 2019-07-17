@@ -47,7 +47,7 @@ public class TaskDate {
             }
         }
     }
-
+    
     public void loadData() {
         this.tasks = parser.readXMLToObject().getTasks();
         Comparator<Task> comparator = Comparator.comparing(obj -> obj.getId());
