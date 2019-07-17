@@ -42,25 +42,7 @@ public class Console {
                             createTaskCommand = bf.readLine();
                             switch (createTaskCommand) {
                                 case ("1"):
-                                    int day;
-                                    int month;
-                                    int year;
-                                    int hour;
-                                    int minute;
-                                    int second;
-                                    System.out.println("введите день(число)");
-                                    day = Integer.parseInt(bf.readLine());
-                                    System.out.println("введите месяц(число)");
-                                    month = Integer.parseInt(bf.readLine());
-                                    System.out.println("введите год(число)");
-                                    year = Integer.parseInt(bf.readLine());
-                                    System.out.println("введите час(число)");
-                                    hour = Integer.parseInt(bf.readLine());
-                                    System.out.println("введите минуту(число)");
-                                    minute = Integer.parseInt(bf.readLine());
-                                    System.out.println("введите секунду(число)");
-                                    second = Integer.parseInt(bf.readLine());
-                                    task.setData(new GregorianCalendar(year, month, day, hour, minute, second));
+                                    setDate(task);
                                     break;
                                 case ("2"):
                                     String doString = "";
@@ -75,11 +57,9 @@ public class Console {
                                                 task.setDoing("Message");
                                                 System.out.print("Введите сообщение: ");
                                                 task.setMessage(bf.readLine());
-                                                //editTaskFlag = true;
                                                 break;
                                             case ("2"):
                                                 task.setDoing("bip");
-                                                //editTaskFlag = true;
                                                 break;
                                         }
                                     }
@@ -94,7 +74,6 @@ public class Console {
                         while (true) {
                             try {
                                 model.viewTask();
-                                //boolean startTaskDoEdit = true;
                                 String editTaskCommand = "";
                                 if (model.getTasks().isEmpty()) {
                                     System.out.println("Нет задач для изменения.");
@@ -203,6 +182,28 @@ public class Console {
             }
         }
         parser.writeObjectToXML(model);
+    }
+    public static void setDate(Task task) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        int day;
+        int month;
+        int year;
+        int hour;
+        int minute;
+        int second;
+        System.out.println("введите день(число)");
+        day = Integer.parseInt(bf.readLine());
+        System.out.println("введите месяц(число)");
+        month = Integer.parseInt(bf.readLine());
+        System.out.println("введите год(число)");
+        year = Integer.parseInt(bf.readLine());
+        System.out.println("введите час(число)");
+        hour = Integer.parseInt(bf.readLine());
+        System.out.println("введите минуту(число)");
+        minute = Integer.parseInt(bf.readLine());
+        System.out.println("введите секунду(число)");
+        second = Integer.parseInt(bf.readLine());
+        task.setData(new GregorianCalendar(year, month, day, hour, minute, second));
     }
 
 }

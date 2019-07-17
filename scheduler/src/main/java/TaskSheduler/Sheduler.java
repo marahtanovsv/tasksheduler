@@ -15,11 +15,10 @@ public class Sheduler extends Thread {
     public void run() {
         while (task.getStatus()) {
             Date currentDate = new GregorianCalendar().getTime();
-            if (currentDate.equals(task.getData())) {
+            if (currentDate.after(task.getData().getTime())) {
                 String doing = task.getDoing();
                 if (!doing.isEmpty()) {
                     try {
-                        sleep(1000);
                         task.doTask(doing);
                         task.setStatus(false);
                     } catch (Exception e) {

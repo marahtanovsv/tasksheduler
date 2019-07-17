@@ -18,22 +18,24 @@ import java.util.GregorianCalendar;
 public class Task{
     private long id;
     private String doing ;
-    private Calendar data;
+    private GregorianCalendar data;
     private String message;
     private String description;
     private Sheduler sheduler = new Sheduler();
     private Boolean status = true;
 
+    public Task(){
+
+    }
 
     public Task(long id) {
         this.id = id;
         GregorianCalendar data = new GregorianCalendar();
-        data.add(Calendar.HOUR, 1);
-        data.add(Calendar.MINUTE, 2);
+        data.add(Calendar.SECOND, 30);
         this.data=data;
     }
 
-    public Task(long id, String doing, Calendar data, String description) {
+    public Task(long id, String doing, GregorianCalendar data, String description) {
         this.id = id;
         this.doing = doing;
         this.data = data;
@@ -56,7 +58,7 @@ public class Task{
         return message;
     }
 
-    public Calendar getData() {
+    public GregorianCalendar getData() {
         return data;
     }
 
@@ -85,7 +87,7 @@ public class Task{
     }
 
     @XmlElement
-    public void setData(Calendar data) {
+    public void setData(GregorianCalendar data) {
         this.data = data;
     }
     @XmlElement
@@ -109,11 +111,11 @@ public class Task{
     }
 
 
-    public void doTask(String message) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if ("message".equals(message)) {
+    public void doTask(String action) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if ("Message".equals(action)) {
             System.out.println(message);
         }
-        if (message.equals("bip")) {
+        if ("bip".equals(action)) {
             File clap = new File("beep.wav");
             Clip clip = null;
                 clip = AudioSystem.getClip();
