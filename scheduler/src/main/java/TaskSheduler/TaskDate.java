@@ -40,7 +40,7 @@ public class TaskDate {
     }
 
     public void viewTask() {
-        if (tasks.isEmpty()) System.out.println("Нет задач");
+        if (tasks.isEmpty()) System.out.println(Constants._DONTCREATEDTASK);
         else {
             for (Task taskList : tasks) {
                 System.out.println(taskList.toString());
@@ -87,7 +87,7 @@ public class TaskDate {
         idTask++;
         boolean areAddedTasks = addTaskToTasks(task);
         if (areAddedTasks) {
-            System.out.println("Залача создана!");
+            System.out.println(Constants._TASKDONTCREATE);
             task.startSheduler();
             return task;
         } else return null;

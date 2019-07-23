@@ -1,10 +1,7 @@
 package TaskSheduler;
 
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,7 +14,7 @@ import java.util.GregorianCalendar;
 @XmlRootElement
 public class Task{
     private long id;
-    private String doing ;
+    private String action;
     private GregorianCalendar data;
     private String message;
     private String description;
@@ -35,9 +32,9 @@ public class Task{
         this.data=data;
     }
 
-    public Task(long id, String doing, GregorianCalendar data, String description) {
+    public Task(long id, String action, GregorianCalendar data, String description) {
         this.id = id;
-        this.doing = doing;
+        this.action = action;
         this.data = data;
         this.description = description;
     }
@@ -50,8 +47,8 @@ public class Task{
         return id;
     }
 
-    public String getDoing() {
-        return doing;
+    public String getAction() {
+        return action;
     }
 
     public String getMessage() {
@@ -77,8 +74,8 @@ public class Task{
     }
 
     @XmlElement
-    public void setDoing(String doing) {
-        this.doing = doing;
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @XmlElement
@@ -97,33 +94,44 @@ public class Task{
 
     @Override
     public String toString(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm:ss ");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants._DATAFORMAT);
         String result="";
         try {
-            if (doing.equals("Message")) {
-                result = id + ") Имя задачи " + description + " время запуска задачи: " + dateFormat.format(data.getTime()) + " Действие " + doing + " Выводимое сообщение " + message;
-            } else if (doing.equals("bip"))
-                result= id+") Имя задачи " + description + " время запуска задачи: " + dateFormat.format(data.getTime()) + "Действие воспроизвести аудио файл";
+            if (Constants._PRINTMESSAGEACTION.equals(action)) {
+                result = id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONTOSTRING + action + Constants._TASKMESSAGETOSTRING + message;
+            } else if (Constants._PLAYSOUNDACTION.equals(action))
+                result= id+ Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKPLAYSOUNDACTIONTOSTRING;
         } catch (NullPointerException e) {
-            result= id+") Имя задачи " + description + " время запуска задачи: " + dateFormat.format(data.getTime()) + " Действие не задано";
+            result= id+ Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONNOSTATUSTOSTRING;
         }
         return result;
     }
 
-
     public void doTask(String action) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if ("Message".equals(action)) {
+        if (Constants._PRINTMESSAGEACTION.equals(action)) {
             System.out.println(message);
         }
-        if ("bip".equals(action)) {
-            File clap = new File("beep.wav");
-            Clip clip = null;
-                clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(clap));
-                clip.start();
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
+        if (Constants._PLAYSOUNDACTION.equals(action)) {
+            Clip clipSound;
+            File clap = new File(Constants._SOUNDFILEPATH);
+            AudioFileFormat aff = AudioSystem.getAudioFileFormat(clap);
+            AudioFormat af = aff.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, af);
+            if (AudioSystem.isLineSupported(info)) {
+                clipSound = (Clip) AudioSystem.getLine(info);
+                AudioInputStream ais = AudioSystem.getAudioInputStream(clap);
+                clipSound.open(ais);
+                clipSound.start();
+                clipSound.stop();
+                clipSound.close();
+            }
+            else
+            {
+                System.exit(0);
+            }
         }
     }
+
     public void startSheduler(){
         sheduler.setTask(this);
         sheduler.setDaemon(true);
