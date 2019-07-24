@@ -26,6 +26,7 @@ public class Sheduler extends Thread {
                     }
                 }
             }
+            else task.setStatus(true);
         }
     }
 }

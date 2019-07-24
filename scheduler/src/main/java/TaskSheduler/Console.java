@@ -1,5 +1,7 @@
 package TaskSheduler;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -108,19 +110,19 @@ public class Console {
     public static void setAction(Task task) throws IOException {
         String doString = "";
         while (!doString.equals("3")) {
-            System.out.println("выберите действие");
-            System.out.println("1. Вывести сообщение.");
-            System.out.println("2. Воспроизвести аудио файл");
-            System.out.println("3. Выход");
+            System.out.println(Constants._SELECTACTION);
+            System.out.println(Constants._ENTERMESSAGE);
+            System.out.println(Constants._ENTERPLAYSOUND);
+            System.out.println("3. "+Constants._EXIT);
             doString = bf.readLine();
             switch (doString) {
                 case ("1"):
-                    task.setAction("Message");
-                    System.out.print("Введите сообщение: ");
+                    task.setAction(Constants._PRINTMESSAGEACTION);
+                    System.out.print(Constants._SETTASKMESSAGE);
                     task.setMessage(bf.readLine());
                     break;
                 case ("2"):
-                    task.setAction("bip");
+                    task.setAction(Constants._PLAYSOUNDACTION);
                     break;
             }
         }
@@ -131,15 +133,15 @@ public class Console {
         Task task = null;
         String editTaskCommand = "";
         if (model.getTasks().isEmpty()) {
-            System.out.println("Нет задач для изменения.");
+            System.out.println(Constants._TASKNOCHANGE);
         } else {
-            System.out.println("Введите номер задачи для редактирования");
+            System.out.println(Constants._ENTERTASKNUMBER);
             task = model.editTask(Integer.parseInt(bf.readLine()));
         }
         while (!editTaskCommand.equals("3")) {
-            System.out.println("1. Задать время.");
-            System.out.println("2. Задать действие");
-            System.out.println("3. Выход");
+            System.out.println(Constants._SETDATA);
+            System.out.println(Constants._SETACTION);
+            System.out.println("3. "+Constants._EXIT);
             editTaskCommand = bf.readLine();
             switch (editTaskCommand) {
                 case ("1"):
@@ -155,19 +157,19 @@ public class Console {
     public static void editTaskDate(Task task) throws IOException {
         String editDateString = "";
         while (!editDateString.equals("7")) {
-            System.out.println("выберите действие");
-            System.out.println("1. Изменить день");
-            System.out.println("2. Изменить месяц");
-            System.out.println("3. Изменить год");
-            System.out.println("4. Изменить час");
-            System.out.println("5. Изменить минуту");
-            System.out.println("6. Изменить секунду");
-            System.out.println("7. Выход");
+            System.out.println(Constants._SELECTACTION);
+            System.out.println(Constants._EDITDAY);
+            System.out.println(Constants._EDITMONTH);
+            System.out.println(Constants._EDITYEAR);
+            System.out.println(Constants._EDITHOUR);
+            System.out.println(Constants._EDITMINNUTE);
+            System.out.println(Constants._EDITSECOND);
+            System.out.println("7. "+Constants._EXIT);
 
             try {
                 editDateString = bf.readLine();
             } catch (IOException e1) {
-                System.out.println("Введены некоректные данные");
+                System.out.println(Constants._UNCORRECTDATE);
             }
             Calendar calendar = task.getData();
             switch (editDateString) {
@@ -197,7 +199,7 @@ public class Console {
     public static void editActionTask(Task task) {
         String doString = "";
         while (!doString.equals("3")) {
-            System.out.println("выберите действие");
+            System.out.println(Constants._SELECTACTION);
             System.out.println(Constants._ENTERMESSAGE);
             System.out.println(Constants._ENTERPLAYSOUND);
             System.out.println("3. "+Constants._EXIT);
@@ -205,12 +207,12 @@ public class Console {
                 doString = bf.readLine();
                 switch (doString) {
                     case ("1"):
-                        task.setAction("Message");
-                        System.out.print("Введите сообщение: ");
+                        task.setAction(Constants._PRINTMESSAGEACTION);
+                        System.out.print(Constants._SETTASKMESSAGE);
                         task.setMessage(bf.readLine());
                         break;
                     case ("2"):
-                        task.setAction("bip");
+                        task.setAction(Constants._PLAYSOUNDACTION);
                         break;
                 }
             } catch (IOException e) {
@@ -223,6 +225,7 @@ public class Console {
     public static void setDataDayFromTask(Calendar calendar) throws IOException {
         System.out.println(Constants._ENTERDAY);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
+
     }
 
     public static void setDataMonthFromTask(Calendar calendar) throws IOException {

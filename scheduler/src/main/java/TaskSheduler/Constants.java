@@ -46,6 +46,12 @@ public class Constants {
     public static final String _5="5";
     public static final String _6="6";
     public static final String _7="7";
+    public static final String _EDITDAY="1. Изменить день";
+    public static final String _EDITMONTH="2. Изменить месяц";
+    public static final String _EDITYEAR="3. Изменить год";
+    public static final String _EDITHOUR="4. Изменить час";
+    public static final String _EDITMINNUTE="5. Изменить минуту";
+    public static final String _EDITSECOND="6. Изменить секунду";
 
 
 
