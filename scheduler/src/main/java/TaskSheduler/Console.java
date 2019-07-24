@@ -14,12 +14,13 @@ public class Console {
         Parser parser = new Parser();
         String command = "";
         model.loadData();
-        System.out.println("Добро пожаловать в планировшик задач");
+        System.out.println(Constants._WERCOME);
         while (!command.equals("4")) {
-            System.out.println("1. Создать задачу.");
-            System.out.println("2. Вывести список задач.");
-            System.out.println("3. Изменить задачу.");
-            System.out.println("4. Выход");
+            System.out.println(Constants._SELECTACTION);
+            System.out.println(Constants._CREATETASK);
+            System.out.println(Constants._VIEWTASKS);
+            System.out.println(Constants._EDITTASK);
+            System.out.println("4. "+Constants._EXIT);
             try {
                 command = bf.readLine();
                 switch (command) {
@@ -33,16 +34,16 @@ public class Console {
                         try {
                             editTask(model);
                         } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("Введены не коректные данные");
+                            System.out.println(Constants._UNCORRECTDATE);
                         } catch (IndexOutOfBoundsException e) {
-                            System.out.println("Данной задачи не существует");
+                            System.out.println(Constants._TASKDONTEXIST);
                         } catch (NumberFormatException e) {
-                            System.out.println("Номер задачи должен быть числом");
+                            System.out.println(Constants._TASKNUMBERMUSTBENUMERIC);
                         }
                 }
 
             } catch (IOException e) {
-                System.out.println("Введен недопустимый параметр.");
+                System.out.println(Constants._UNCORRECTDATE);
             }
         }
         parser.writeObjectToXML(model);
@@ -57,18 +58,18 @@ public class Console {
         String createTaskCommand = "";
         Task task = model.createTask();
         if (task != null) {
-            System.out.println("Введите имя задачи");
+            System.out.println(Constants._ENTERTASKNAME);
             task.setDescription(bf.readLine());
         } else
             while (model.existTask(task)) {
-                System.out.println("Вы ошиблись вводе или такое имя уже используется. Повторите ввод.");
+                System.out.println(Constants._ALREADYUSEDNAME);
                 task.setDescription(bf.readLine());
             }
         while (!createTaskCommand.equals("3")) {
-            System.out.println("выберите действие");
-            System.out.println("1. Задать время.");
-            System.out.println("2. Задать действие");
-            System.out.println("3. Выход");
+            System.out.println(Constants._SELECTACTION);
+            System.out.println(Constants._SETDATA);
+            System.out.println(Constants._SETACTION);
+            System.out.println("3. "+Constants._EXIT);
             createTaskCommand = bf.readLine();
             switch (createTaskCommand) {
                 case ("1"):
@@ -89,17 +90,17 @@ public class Console {
         int hour;
         int minute;
         int second;
-        System.out.println("введите день(число)");
+        System.out.println(Constants._ENTERDAY);
         day = Integer.parseInt(bf.readLine());
-        System.out.println("введите месяц(число)");
+        System.out.println(Constants._ENTERMONTH);
         month = Integer.parseInt(bf.readLine());
-        System.out.println("введите год(число)");
+        System.out.println(Constants._ENTERYEAR);
         year = Integer.parseInt(bf.readLine());
-        System.out.println("введите час(число)");
+        System.out.println(Constants._ENTERHOUR);
         hour = Integer.parseInt(bf.readLine());
-        System.out.println("введите минуту(число)");
+        System.out.println(Constants._ENTERMINUTE);
         minute = Integer.parseInt(bf.readLine());
-        System.out.println("введите секунду(число)");
+        System.out.println(Constants._ENTERSECOND);
         second = Integer.parseInt(bf.readLine());
         task.setData(new GregorianCalendar(year, month, day, hour, minute, second));
     }
@@ -154,19 +155,19 @@ public class Console {
     public static void editTaskDate(Task task) throws IOException {
         String editDateString = "";
         while (!editDateString.equals("7")) {
-            System.out.println("что необходимо изменить.");
-            System.out.println("1. День");
-            System.out.println("2. Месяц");
-            System.out.println("3. Год");
-            System.out.println("4. Час");
-            System.out.println("5. Минуту");
-            System.out.println("6. Секунду");
-            System.out.println("7. Отмена");
+            System.out.println("выберите действие");
+            System.out.println("1. Изменить день");
+            System.out.println("2. Изменить месяц");
+            System.out.println("3. Изменить год");
+            System.out.println("4. Изменить час");
+            System.out.println("5. Изменить минуту");
+            System.out.println("6. Изменить секунду");
+            System.out.println("7. Выход");
 
             try {
                 editDateString = bf.readLine();
             } catch (IOException e1) {
-                System.out.println("Введены некоректные данные, необходимо ввести номер меню(от 1 до 7)");
+                System.out.println("Введены некоректные данные");
             }
             Calendar calendar = task.getData();
             switch (editDateString) {
@@ -197,9 +198,9 @@ public class Console {
         String doString = "";
         while (!doString.equals("3")) {
             System.out.println("выберите действие");
-            System.out.println("1. Вывести сообщение.");
-            System.out.println("2. Воспроизвести аудио файл");
-            System.out.println("3. Выход");
+            System.out.println(Constants._ENTERMESSAGE);
+            System.out.println(Constants._ENTERPLAYSOUND);
+            System.out.println("3. "+Constants._EXIT);
             try {
                 doString = bf.readLine();
                 switch (doString) {
@@ -213,39 +214,39 @@ public class Console {
                         break;
                 }
             } catch (IOException e) {
-                System.out.println("Введены некоректные данные, необходимо ввести номер меню");
+                System.out.println(Constants._UNCORRECTDATE);
             }
 
         }
     }
 
     public static void setDataDayFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERDAY);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
     }
 
     public static void setDataMonthFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERMONTH);
         calendar.set(Calendar.MONTH, Integer.parseInt(bf.readLine()));
     }
 
     public static void setDataYearFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERYEAR);
         calendar.set(Calendar.YEAR, Integer.parseInt(bf.readLine()));
     }
 
     public static void setDataHourFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERHOUR);
         calendar.set(Calendar.HOUR, Integer.parseInt(bf.readLine()));
     }
 
     public static void setDataMinuteFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERMINUTE);
         calendar.set(Calendar.MINUTE, Integer.parseInt(bf.readLine()));
     }
 
     public static void setDataSecondFromTask(Calendar calendar) throws IOException {
-        System.out.println("Введите день");
+        System.out.println(Constants._ENTERSECOND);
         calendar.set(Calendar.SECOND, Integer.parseInt(bf.readLine()));
     }
 

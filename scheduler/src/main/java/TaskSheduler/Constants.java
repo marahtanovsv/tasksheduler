@@ -15,6 +15,37 @@ public class Constants {
     public static final String _TASKACTIONNOSTATUSTOSTRING=" Действие не задано.";
     public static final String _TASKMESSAGETOSTRING=" Выводимое сообщение ";
     public static final String _DATAFORMAT="dd.MM.yyyy  HH:mm:ss ";
+    public static final String _WERCOME="Добро пожаловать в планировшик задач";
+    public static final String _CREATETASK="1. Создать задачу.";
+    public static final String _VIEWTASKS="2. Вывести список задач.";
+    public static final String _EDITTASK="3. Изменить задачу.";
+    public static final String _EXIT="Выход";
+    public static final String _UNCORRECTDATE="Введены не коректные данные";
+    public static final String _TASKDONTEXIST="Данной задачи не существует";
+    public static final String _TASKNUMBERMUSTBENUMERIC="Номер задачи должен быть числом";
+    public static final String _ENTERTASKNAME="Введите имя задачи";
+    public static final String _ALREADYUSEDNAME="Вы ошиблись при вводе или такое имя уже используется. Повторите ввод.";
+    public static final String _SELECTACTION="выберите действие";
+    public static final String _SETDATA="1. Задать время.";
+    public static final String _SETACTION="2. Задать действие";
+    public static final String _ENTERDAY="введите день(число)";
+    public static final String _ENTERMONTH="введите месяц(число)";
+    public static final String _ENTERYEAR="введите год(число)";
+    public static final String _ENTERHOUR="введите час(число)";
+    public static final String _ENTERMINUTE="введите минуту(число)";
+    public static final String _ENTERSECOND="введите секунду(число)";
+    public static final String _ENTERMESSAGE="1. Вывести сообщение.";
+    public static final String _ENTERPLAYSOUND="2. Воспроизвести аудио файл";
+    public static final String _SETTASKMESSAGE="Введите сообщение: ";
+    public static final String _TASKNOCHANGE="Нет задач для изменения.";
+    public static final String _ENTERTASKNUMBER="Введите номер задачи для редактирования";
+    public static final String _1="1";
+    public static final String _2="2";
+    public static final String _3="3";
+    public static final String _4="4";
+    public static final String _5="5";
+    public static final String _6="6";
+    public static final String _7="7";
 
 
 
