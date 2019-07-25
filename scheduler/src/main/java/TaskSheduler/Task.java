@@ -18,9 +18,8 @@ public class Task{
     private GregorianCalendar data;
     private String message;
     private String description;
-    private Sheduler sheduler = new Sheduler();
     private Boolean status = true;
-
+    private Sheduler sheduler = new Sheduler();
     public Task(){
 
     }
@@ -107,7 +106,7 @@ public class Task{
         return result;
     }
 
-    public void doTask(String action) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public synchronized void doTask(String action) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (Constants._PRINTMESSAGEACTION.equals(action)) {
             System.out.println(message);
         }
@@ -133,9 +132,11 @@ public class Task{
     }
 
     public void startSheduler(){
+
         sheduler.setTask(this);
         sheduler.setDaemon(true);
         sheduler.start();
+        //sheduler.interrupt();
     }
 
 

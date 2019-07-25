@@ -1,7 +1,5 @@
 package TaskSheduler;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -86,6 +84,7 @@ public class Console {
 
     public static void setDate(Task task) throws IOException {
         //BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        GregorianCalendar gc = new GregorianCalendar();
         int day;
         int month;
         int year;
@@ -171,26 +170,31 @@ public class Console {
             } catch (IOException e1) {
                 System.out.println(Constants._UNCORRECTDATE);
             }
-            Calendar calendar = task.getData();
+            GregorianCalendar calendar = task.getData();
             switch (editDateString) {
                 case ("1"):
-                    setDataDayFromTask(calendar);
+                    calendar=setDataDayFromTask(calendar);
                     break;
                 case ("2"):
-                    setDataMonthFromTask(calendar);
+                    calendar=setDataMonthFromTask(calendar);
                     break;
                 case ("3"):
-                    setDataYearFromTask(calendar);
+                    calendar=setDataYearFromTask(calendar);
                     break;
                 case ("4"):
-                    setDataHourFromTask(calendar);
+                    calendar=setDataHourFromTask(calendar);
                     break;
                 case ("5"):
-                    setDataMinuteFromTask(calendar);
+                    calendar=setDataMinuteFromTask(calendar);
                     break;
                 case ("6"):
-                    setDataSecondFromTask(calendar);
+                    calendar=setDataSecondFromTask(calendar);
                     break;
+            }
+            task.setData(calendar);
+            if(new GregorianCalendar().getTime().before(task.getData().getTime())){
+                task.setStatus(true);
+                //task.startSheduler();
             }
 
         }
@@ -222,35 +226,40 @@ public class Console {
         }
     }
 
-    public static void setDataDayFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataDayFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERDAY);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
-
+        return calendar;
     }
 
-    public static void setDataMonthFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataMonthFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERMONTH);
         calendar.set(Calendar.MONTH, Integer.parseInt(bf.readLine()));
+        return calendar;
     }
 
-    public static void setDataYearFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataYearFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERYEAR);
         calendar.set(Calendar.YEAR, Integer.parseInt(bf.readLine()));
+        return calendar;
     }
 
-    public static void setDataHourFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataHourFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERHOUR);
         calendar.set(Calendar.HOUR, Integer.parseInt(bf.readLine()));
+        return calendar;
     }
 
-    public static void setDataMinuteFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataMinuteFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERMINUTE);
         calendar.set(Calendar.MINUTE, Integer.parseInt(bf.readLine()));
+        return calendar;
     }
 
-    public static void setDataSecondFromTask(Calendar calendar) throws IOException {
+    public static GregorianCalendar setDataSecondFromTask(GregorianCalendar calendar) throws IOException {
         System.out.println(Constants._ENTERSECOND);
         calendar.set(Calendar.SECOND, Integer.parseInt(bf.readLine()));
+        return calendar;
     }
 
 

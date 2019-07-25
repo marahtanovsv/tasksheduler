@@ -17,16 +17,18 @@ public class Sheduler extends Thread {
             Date currentDate = new GregorianCalendar().getTime();
             if (currentDate.after(task.getData().getTime())) {
                 String doing = task.getAction();
-                if (!doing.isEmpty()) {
-                    try {
-                        task.doTask(doing);
-                        task.setStatus(false);
-                    } catch (Exception e) {
-                        System.out.println(Constants._ERROR);
+                if (task.getStatus()) {
+                    if (!doing.isEmpty()) {
+                        try {
+                            task.doTask(doing);
+                            task.setStatus(false);
+                            this.interrupt();
+                        } catch (Exception e) {
+                            System.out.println(Constants._ERROR);
+                        }
                     }
                 }
             }
-            else task.setStatus(true);
         }
     }
 }
