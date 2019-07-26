@@ -25,7 +25,7 @@ public class Constants {
     public static final String _TASKNUMBERMUSTBENUMERIC="Номер задачи должен быть числом";
     public static final String _ENTERTASKNAME="Введите имя задачи";
     public static final String _ALREADYUSEDNAME="Вы ошиблись при вводе или такое имя уже используется. Повторите ввод.";
-    public static final String _SELECTACTION="выберите действие";
+    public static final String _SELECT_ACTION="выберите действие";
     public static final String _SETDATA="1. Задать время.";
     public static final String _SETACTION="2. Задать действие";
     public static final String _ENTERDAY="введите день(число)";
@@ -52,7 +52,4 @@ public class Constants {
     public static final String _EDITHOUR="4. Изменить час";
     public static final String _EDITMINNUTE="5. Изменить минуту";
     public static final String _EDITSECOND="6. Изменить секунду";
-
-
-
 }

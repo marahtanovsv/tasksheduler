@@ -19,7 +19,8 @@ public class Task{
     private String message;
     private String description;
     private Boolean status = true;
-    private Sheduler sheduler = new Sheduler();
+    private Sheduler sheduler = new Sheduler(); //read Callable and Future, apply one of them to run code async
+    //JDBC
     public Task(){
 
     }
@@ -65,7 +66,7 @@ public class Task{
     @XmlAttribute
     public void setId(long id) {
         this.id = id;
-    }
+    } //TODO: remove all unused code
 
     @XmlElement
     public void setDescription(String description) {
@@ -96,12 +97,12 @@ public class Task{
         SimpleDateFormat dateFormat = new SimpleDateFormat(Constants._DATAFORMAT);
         String result="";
         try {
-            if (Constants._PRINTMESSAGEACTION.equals(action)) {
+            if (Constants._PRINTMESSAGEACTION.equals(action)) {//TODO: StringBuffer/StringBuilder
                 result = id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONTOSTRING + action + Constants._TASKMESSAGETOSTRING + message;
             } else if (Constants._PLAYSOUNDACTION.equals(action))
-                result= id+ Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKPLAYSOUNDACTIONTOSTRING;
+                result= id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKPLAYSOUNDACTIONTOSTRING;
         } catch (NullPointerException e) {
-            result= id+ Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONNOSTATUSTOSTRING;
+            result= id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONNOSTATUSTOSTRING;
         }
         return result;
     }
