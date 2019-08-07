@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXIST tasks{
+    id SERIAL PRIMARY KEY
+    action VARCHAR(10) NOT NULL
+    data DATATIME  NOT NULL
+    message VARCHAR(255)
+    description VARCHAR(255) NOT NULL
+    status BOOLEAN NOT NULL
+}

@@ -3,16 +3,19 @@ package TaskSheduler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Console {
     public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         TaskDate model = new TaskDate();
         Parser parser = new Parser();
         String command = "";
+        JDBS jdbs = new JDBS();
+        jdbs.writeJDBS(model);
         model.loadData();
         System.out.println(Constants._WERCOME);
         while (!command.equals("4")) {
