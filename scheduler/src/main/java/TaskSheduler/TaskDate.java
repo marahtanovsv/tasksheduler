@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 @XmlRootElement
-public class TaskDate {
+public class TaskDate { 
     private long idTask;
     private Parser parser = new Parser();
     private ArrayList<Task> tasks = new ArrayList<>();
