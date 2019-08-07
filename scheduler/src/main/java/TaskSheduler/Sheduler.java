@@ -13,20 +13,16 @@ public class Sheduler extends Thread {
 
     @Override
     public void run() {
-        while (task.getStatus()) {
-            Date currentDate = new GregorianCalendar().getTime();
-            if (currentDate.after(task.getData().getTime())) {
-                String doing = task.getAction();
-                if (task.getStatus()) {
-                    if (!doing.isEmpty()) {
-                        try {
-                            task.doTask(doing);
-                            task.setStatus(false);
-                            this.interrupt();
-                        } catch (Exception e) {
-                            System.out.println(Constants._ERROR);
-                        }
-                    }
+        Date currentDate = new GregorianCalendar().getTime();
+        while (task.isInProgress() && currentDate.after(task.getData().getTime())) {
+            String action = task.getAction();
+            if (task.isInProgress() && !action.isEmpty()) {
+                try {
+                    task.doTask(action);
+                    task.setStatus(false);
+                    this.interrupt();
+                } catch (Exception e) {
+                    System.out.println(Constants._ERROR);
                 }
             }
         }

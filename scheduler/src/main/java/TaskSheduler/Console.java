@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Console {
-    public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+    //public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         TaskDate model = new TaskDate();
@@ -19,12 +19,12 @@ public class Console {
         model.loadData();
         System.out.println(Constants._WERCOME);
         while (!command.equals("4")) {
-            System.out.println(Constants._SELECTACTION);
+            System.out.println(Constants._SELECT_ACTION);
             System.out.println(Constants._CREATETASK);
             System.out.println(Constants._VIEWTASKS);
             System.out.println(Constants._EDITTASK);
-            System.out.println("4. "+Constants._EXIT);
-            try {
+            System.out.println("4. " + Constants._EXIT);
+            try (BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))){
                 command = bf.readLine();
                 switch (command) {
                     case ("1"):
@@ -50,11 +50,11 @@ public class Console {
             }
         }
         parser.writeObjectToXML(model);
-        try {
-            bf.close();
-        } catch (IOException e) {
 
-        }
+        //try {
+        //    bf.close();
+        //} catch (IOException e) {
+        //}
     }
 
     public static void createTask(BufferedReader bf, TaskDate model) throws IOException {
@@ -85,7 +85,7 @@ public class Console {
         }
     }
 
-    public static void setDate(Task task) throws IOException {
+    public static void setDate(Task task, BufferedReader bf) throws IOException {
         //BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         GregorianCalendar gc = new GregorianCalendar();
         int day;
@@ -109,7 +109,7 @@ public class Console {
         task.setData(new GregorianCalendar(year, month, day, hour, minute, second));
     }
 
-    public static void setAction(Task task) throws IOException {
+    public static void setAction(Task task, BufferedReader bf) throws IOException {
         String doString = "";
         while (!doString.equals("3")) {
             System.out.println(Constants._SELECTACTION);
@@ -130,7 +130,7 @@ public class Console {
         }
     }
 
-    public static void editTask(TaskDate model) throws IOException {
+    public static void editTask(TaskDate model, BufferedReader bf) throws IOException {
         model.viewTask();
         Task task = null;
         String editTaskCommand = "";
@@ -156,7 +156,7 @@ public class Console {
         }
     }
 
-    public static void editTaskDate(Task task) throws IOException {
+    public static void editTaskDate(Task task, BufferedReader bf) throws IOException {
         String editDateString = "";
         while (!editDateString.equals("7")) {
             System.out.println(Constants._SELECTACTION);
@@ -203,7 +203,7 @@ public class Console {
         }
     }
 
-    public static void editActionTask(Task task) {
+    public static void editActionTask(Task task, BufferedReader bf) {
         String doString = "";
         while (!doString.equals("3")) {
             System.out.println(Constants._SELECTACTION);
@@ -229,37 +229,37 @@ public class Console {
         }
     }
 
-    public static GregorianCalendar setDataDayFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataDayFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERDAY);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(bf.readLine()));
         return calendar;
     }
 
-    public static GregorianCalendar setDataMonthFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataMonthFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERMONTH);
         calendar.set(Calendar.MONTH, Integer.parseInt(bf.readLine()));
         return calendar;
     }
 
-    public static GregorianCalendar setDataYearFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataYearFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERYEAR);
         calendar.set(Calendar.YEAR, Integer.parseInt(bf.readLine()));
         return calendar;
     }
 
-    public static GregorianCalendar setDataHourFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataHourFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERHOUR);
         calendar.set(Calendar.HOUR, Integer.parseInt(bf.readLine()));
         return calendar;
     }
 
-    public static GregorianCalendar setDataMinuteFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataMinuteFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERMINUTE);
         calendar.set(Calendar.MINUTE, Integer.parseInt(bf.readLine()));
         return calendar;
     }
 
-    public static GregorianCalendar setDataSecondFromTask(GregorianCalendar calendar) throws IOException {
+    public static GregorianCalendar setDataSecondFromTask(GregorianCalendar calendar, BufferedReader bf) throws IOException {
         System.out.println(Constants._ENTERSECOND);
         calendar.set(Calendar.SECOND, Integer.parseInt(bf.readLine()));
         return calendar;

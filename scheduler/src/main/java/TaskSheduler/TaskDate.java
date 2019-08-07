@@ -40,7 +40,7 @@ public class TaskDate {
     }
 
     public void viewTask() {
-        if (tasks.isEmpty()) System.out.println(Constants._DONTCREATEDTASK);
+        if (tasks.isEmpty()) System.out.println(Constants._DONTCREATEDTASK); //TODO: add {}
         else {
             for (Task taskList : tasks) {
                 System.out.println(taskList.toString());
@@ -57,13 +57,13 @@ public class TaskDate {
             idTask = tasks.size();
         }
         for(Task listTask:tasks){
-            if(listTask.getStatus()) listTask.startSheduler();
+            if(listTask.getStatus()) listTask.startSheduler(); //TODO: add {}
         }
 
     }
 
     public boolean addTaskToTasks(Task task) {
-        if (existTask(task)) return false;
+        if (existTask(task)) return false; //TODO: add {}
         else {
 
             return tasks.add(task);
@@ -77,7 +77,7 @@ public class TaskDate {
     public boolean existTask(Task task) {
         boolean exist = false;
         for (Task tasklist : tasks) {
-            if (task.getId() == tasklist.getId()) exist = true;
+            if (task.getId() == tasklist.getId()) exist = true; //TODO: add {}
         }
         return exist;
     }
