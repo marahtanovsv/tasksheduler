@@ -3,7 +3,7 @@ package TaskSheduler;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Sheduler extends Thread {
+public class Scheduler extends Thread {
 
     private Task task;
 
@@ -22,7 +22,7 @@ public class Sheduler extends Thread {
                     task.setStatus(false);
                     this.interrupt();
                 } catch (Exception e) {
-                    System.out.println(Constants._ERROR);
+                    System.out.println(Constants.ERROR);
                 }
             }
         }

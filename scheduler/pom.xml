@@ -27,10 +27,10 @@
             <version>2.3.0.1</version>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
+            <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4.1208-jdbc42-atlassian-hosted</version>
-        </dependency>`
+            <version>9.1-901.jdbc4</version>
+        </dependency>
     </dependencies>
     
 </project>

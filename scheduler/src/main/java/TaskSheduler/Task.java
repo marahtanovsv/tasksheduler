@@ -13,13 +13,14 @@ import java.util.GregorianCalendar;
 
 @XmlRootElement
 public class Task{
+
     private long id;
     private String action;
     private GregorianCalendar data;
     private String message;
     private String description;
-    private Boolean status = true;
-    private Sheduler sheduler = new Sheduler(); //read Callable and Future, apply one of them to run code async
+    private Boolean isInProgress = true;
+    private Scheduler sheduler = new Scheduler(); //read Callable and Future, apply one of them to run code async
     //JDBC
     public Task(){
 
@@ -32,17 +33,6 @@ public class Task{
         this.data=data;
     }
 
-    public Task(long id, String action, GregorianCalendar data, String description) {
-        this.id = id;
-        this.action = action;
-        this.data = data;
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public long getId() {
         return id;
     }
@@ -51,22 +41,13 @@ public class Task{
         return action;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public GregorianCalendar getData() {
         return data;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean isInProgress() {
+        return isInProgress;
     }
-
-    @XmlAttribute
-    public void setId(long id) {
-        this.id = id;
-    } //TODO: remove all unused code
 
     @XmlElement
     public void setDescription(String description) {
@@ -87,33 +68,34 @@ public class Task{
     public void setData(GregorianCalendar data) {
         this.data = data;
     }
+
     @XmlElement
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStatus(Boolean isInProgress) {
+        this.isInProgress = isInProgress;
     }
 
     @Override
     public String toString(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants._DATAFORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATA_FORMAT);
         String result="";
         try {
-            if (Constants._PRINTMESSAGEACTION.equals(action)) {//TODO: StringBuffer/StringBuilder
-                result = id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONTOSTRING + action + Constants._TASKMESSAGETOSTRING + message;
-            } else if (Constants._PLAYSOUNDACTION.equals(action))
-                result= id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKPLAYSOUNDACTIONTOSTRING;
+            if (Constants.PRINT_MESSAGE_ACTION.equals(action)) {//TODO: StringBuffer/StringBuilder
+                result = id + Constants.TASK_NAME_TO_STRING + description + Constants.TASK_DATE_TO_STRING + dateFormat.format(data.getTime()) + Constants.TASK_ACTION_TO_STRING + action + Constants.TASK_MESSAGE_TO_STRING + message;
+            } else if (Constants.PLAY_SOUND_ACTION.equals(action))
+                result= id + Constants.TASK_NAME_TO_STRING + description + Constants.TASK_DATE_TO_STRING + dateFormat.format(data.getTime()) + Constants.TASK_PLAY_SOUND_ACTION_TO_STRING;
         } catch (NullPointerException e) {
-            result= id + Constants._TASKNAMETOSTRING + description + Constants._TASKDATETOSTRING + dateFormat.format(data.getTime()) + Constants._TASKACTIONNOSTATUSTOSTRING;
+            result= id + Constants.TASK_NAME_TO_STRING + description + Constants.TASK_DATE_TO_STRING + dateFormat.format(data.getTime()) + Constants.TASK_ACTION_NO_STATUS_TO_STRING;
         }
         return result;
     }
 
-    public synchronized void doTask(String action) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (Constants._PRINTMESSAGEACTION.equals(action)) {
+    public void doTask(String action) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if (Constants.PRINT_MESSAGE_ACTION.equals(action)) {
             System.out.println(message);
         }
-        if (Constants._PLAYSOUNDACTION.equals(action)) {
+        if (Constants.PLAY_SOUND_ACTION.equals(action)) {
             Clip clipSound;
-            File clap = new File(Constants._SOUNDFILEPATH);
+            File clap = new File(Constants.SOUND_FILE_PATH);
             AudioFileFormat aff = AudioSystem.getAudioFileFormat(clap);
             AudioFormat af = aff.getFormat();
             DataLine.Info info = new DataLine.Info(Clip.class, af);
@@ -137,9 +119,5 @@ public class Task{
         sheduler.setTask(this);
         sheduler.setDaemon(true);
         sheduler.start();
-        //sheduler.interrupt();
     }
-
-
-
 }

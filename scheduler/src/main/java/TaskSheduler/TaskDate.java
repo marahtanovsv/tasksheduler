@@ -13,26 +13,8 @@ public class TaskDate {
     private ArrayList<Task> tasks = new ArrayList<>();
 
     @XmlElement
-    public void setIdTask(long idTask) {
-        this.idTask = idTask;
-    }
-
-    @XmlElement
-    public void setParser(Parser parser) {
-        this.parser = parser;
-    }
-
-    @XmlElement
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
-    }
-
-    public long getIdTask() {
-        return idTask;
-    }
-
-    public Parser getParser() {
-        return parser;
     }
 
     public ArrayList<Task> getTasks() {
@@ -40,7 +22,9 @@ public class TaskDate {
     }
 
     public void viewTask() {
-        if (tasks.isEmpty()) System.out.println(Constants._DONTCREATEDTASK); //TODO: add {}
+        if (tasks.isEmpty()) {
+            System.out.println(Constants.DONT_CREATED_TASK);
+        }
         else {
             for (Task taskList : tasks) {
                 System.out.println(taskList.toString());
@@ -57,13 +41,17 @@ public class TaskDate {
             idTask = tasks.size();
         }
         for(Task listTask:tasks){
-            if(listTask.getStatus()) listTask.startSheduler(); //TODO: add {}
+            if(listTask.isInProgress()) {
+                listTask.startSheduler();
+            }
         }
 
     }
 
     public boolean addTaskToTasks(Task task) {
-        if (existTask(task)) return false; //TODO: add {}
+        if (existTask(task)) {
+            return false;
+        }
         else {
 
             return tasks.add(task);
@@ -77,7 +65,9 @@ public class TaskDate {
     public boolean existTask(Task task) {
         boolean exist = false;
         for (Task tasklist : tasks) {
-            if (task.getId() == tasklist.getId()) exist = true; //TODO: add {}
+            if (task.getId() == tasklist.getId()) {
+                exist = true;
+            }
         }
         return exist;
     }
@@ -87,7 +77,7 @@ public class TaskDate {
         idTask++;
         boolean areAddedTasks = addTaskToTasks(task);
         if (areAddedTasks) {
-            System.out.println(Constants._TASKDONTCREATE);
+            System.out.println(Constants.TASK_DONT_CREATE);
             task.startSheduler();
             return task;
         } else return null;

@@ -8,13 +8,12 @@ import java.io.OutputStream;
 
 public class Parser {
 
-
     public void writeObjectToXML(TaskDate tasks) {
         try {
             JAXBContext context = JAXBContext.newInstance(TaskDate.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            OutputStream os = new FileOutputStream(Constants._FILEPATH);
+            OutputStream os = new FileOutputStream(Constants.FILE_PATH);
             marshaller.marshal(tasks, os);
             marshaller.marshal(tasks, System.out);
         } catch (JAXBException e) {
@@ -28,7 +27,7 @@ public class Parser {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TaskDate.class);
             Unmarshaller un = jaxbContext.createUnmarshaller();
-            return (TaskDate) un.unmarshal(new File(Constants._FILEPATH));
+            return (TaskDate) un.unmarshal(new File(Constants.FILE_PATH));
         } catch (JAXBException e) {
             return new TaskDate();
         }
